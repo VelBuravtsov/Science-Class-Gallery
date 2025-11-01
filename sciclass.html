@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science Class Gallery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            transform: scale(1.05);
+        }
+
+        .page {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .page-description {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .upload-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 2px dashed #667eea;
+        }
+
+        .upload-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .upload-instructions {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .upload-instructions p {
+            margin: 5px 0;
+            font-size: 0.95em;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .photo-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .photo-info {
+            padding: 15px;
+        }
+
+        .photo-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .photo-description {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .sample-photos {
+            margin-top: 20px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin-top: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: white;
+            margin-top: 50px;
+        }
+
+        .code-note {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .code-note h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .code-note code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .page {
+                padding: 20px;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>🔬 Science Class Gallery</h1>
+            <p class="subtitle">Exploring, Experimenting, and Learning Together</p>
+            <nav>
+                <button class="nav-btn active" onclick="showPage('grade6')">6th Grade</button>
+                <button class="nav-btn" onclick="showPage('grade7')">7th Grade</button>
+                <button class="nav-btn" onclick="showPage('grade8')">8th Grade</button>
+                <button class="nav-btn" onclick="showPage('unified')">Unified Science</button>
+                <button class="nav-btn" onclick="showPage('biology')">Biology</button>
+                <button class="nav-btn" onclick="showPage('chemistry')">Chemistry</button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- 6th Grade Page -->
+        <div id="grade6" class="page active">
+            <h2>6th Grade Science</h2>
+            <p class="page-description">Discovering the fundamentals of physical science, earth science, and life science.</p>
+            
+            <div class="upload-section">
+                <h3>📸 How to Add Photos</h3>
+                <div class="upload-instructions">
+                    <p><strong>Step 1:</strong> Place your photos in a folder named <code>images/grade6/</code></p>
+                    <p><strong>Step 2:</strong> Add the photo details in the JavaScript section below</p>
+                    <p><strong>Step 3:</strong> Commit and push to GitHub</p>
+                </div>
+            </div>
+
+            <div class="sample-photos">
+                <h3>Our Experiments & Activities</h3>
+                <div class="gallery" id="gallery-grade6">
+                    <!-- Sample photos - replace with your own -->
+                    <div class="photo-card">
+                        <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=400" alt="Science Experiment">
+                        <div class="photo-info">
+                            <div class="photo-title">Volcano Experiment</div>
+                            <div class="photo-description">Students created erupting volcanoes using baking soda and vinegar.</div>
+                            <span class="badge">October 2024</span>
+                        </div>
+                    </div>
+                    <div class="photo-card">
+                        <img src="https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=400" alt="Lab Work">
+                        <div class="photo-info">
+                            <div class="photo-title">Microscope Lab</div>
+                            <div class="photo-description">Exploring cells and microorganisms under the microscope.</div>
+                            <span class="badge">September 2024</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7th Grade Page -->
+        <div id="grade7" class="page">
+            <h2>7th Grade Science</h2>
+            <p class="page-description">Diving deeper into life science, ecosystems, and the human body.</p>
+            
+            <div class="upload-section">
+                <h3>📸 How to Add Photos</h3>
+                <div class="upload-instructions">
+                    <p><strong>Step 1:</strong> Place your photos in a folder named <code>images/grade7/</code></p>
+                    <p><strong>Step 2:</strong> Add the photo details in the JavaScript section below</p>
+                    <p><strong>Step 3:</strong> Commit and push to GitHub</p>
+                </div>
+            </div>
+
+            <div class="sample-photos">
+                <h3>Our Experiments & Activities</h3>
+                <div class="gallery" id="gallery-grade7">
+                    <div class="photo-card">
+                        <img src="https://images.unsplash.com/photo-1530587191325-3db32d826c18?w=400" alt="Ecosystem Study">
+                        <div class="photo-info">
+                            <div class="photo-title">Ecosystem Project</div>
+                            <div class="photo-description">Building terrarium ecosystems to study plant and animal interactions.</div>
+                            <span class="badge">October 2024</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8th Grade Page -->
+        <div id="grade8" class="page">
+            <h2>8th Grade Science</h2>
+            <p class="page-description">Exploring chemistry, physics, and preparing for high school science.</p>
+            
+            <div class="upload-section">
+                <h3>📸 How to Add Photos</h3>
+                <div class="upload-instructions">
+                    <p><strong>Step 1:</strong> Place your photos in a folder named <code>images/grade8/</code></p>
+                    <p><strong>Step 2:</strong> Add the photo details in the JavaScript section below</p>
+                    <p><strong>Step 3:</strong> Commit and push to GitHub</p>
+                </div>
+            </div>
+
+            <div class="sample-photos">
+                <h3>Our Experiments & Activities</h3>
+                <div class="gallery" id="gallery-grade8">
+                    <div class="photo-card">
+                        <img src="https://images.unsplash.com/photo-1603126857599-f6e157fa2fe6?w=400" alt="Physics Lab">
+                        <div class="photo-info">
+                            <div class="photo-title">Newton's Laws</div>
+                            <div class="photo-description">Demonstrating motion and force through hands-on activities.</div>
+                            <span class="badge">November 2024</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unified Science Page -->
+        <div id="unified" class="page">
+            <h2>Unified Science</h2>
+            <p class="page-description">Inclusive science learning for all students with hands-on exploration.</p>
+            
+            <div class="upload-section">
+                <h3>📸 How to Add Photos</h3>
+                <div class="upload-instructions">
+                    <p><strong>Step 1:</strong> Place your photos in a folder named <code>images/unified/</code></p>
+                    <p><strong>Step 2:</strong> Add the photo details in the JavaScript section below</p>
+                    <p><strong>Step 3:</strong> Commit and push to GitHub</p>
+                </div>
+            </div>
+
+            <div class="sample-photos">
+                <h3>Our Experiments & Activities</h3>
+                <div class="gallery" id="gallery-unified">
+                    <div class="photo-card">
+                        <img src="https://images.unsplash.com/photo-1581093458791-9d42e1bb2d40?w=400" alt="Sensory Science">
+                        <div class="photo-info">
+                            <div class="photo-title">Sensory Experiments</div>
+                            <div class="photo-description">Exploring science through touch, sight, and sound.</div>
+                            <span class="badge">October 2024</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Biology Page -->
+        <div id="biology" class="page">
+            <h2>Biology</h2>
+            <p class="page-description">Studying living organisms, cells, genetics, and evolution.</p>
+            
+            <div class="upload-section">
+                <h3>📸 How to Add Photos</h3>
+                <div class="upload-instructions">
+                    <p><strong>Step 1:</strong> Place your photos in a folder named <code>images/biology/</code></p>
+                    <p><strong>Step 2:</strong> Add the photo details in the JavaScript section below</p>
+                    <p><strong>Step 3:</strong> Commit and push to GitHub</p>
+                </div>
+            </div>
+
+            <div class="sample-photos">
+                <h3>Our Experiments & Activities</h3>
+                <div class="gallery" id="gallery-biology">
+                    <div class="photo-card">
+                        <img src="https://images.unsplash.com/photo-1578496479914-7ef3b0193be3?w=400" alt="DNA Model">
+                        <div class="photo-info">
+                            <div class="photo-title">DNA Modeling</div>
+                            <div class="photo-description">Building 3D models of DNA structure and learning about genetics.</div>
+                            <span class="badge">September 2024</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chemistry Page -->
+        <div id="chemistry" class="page">
+            <h2>Chemistry</h2>
+            <p class="page-description">Exploring matter, reactions, and the periodic table.</p>
+            
+            <div class="upload-section">
+                <h3>📸 How to Add Photos</h3>
+                <div class="upload-instructions">
+                    <p><strong>Step 1:</strong> Place your photos in a folder named <code>images/chemistry/</code></p>
+                    <p><strong>Step 2:</strong> Add the photo details in the JavaScript section below</p>
+                    <p><strong>Step 3:</strong> Commit and push to GitHub</p>
+                </div>
+            </div>
+
+            <div class="sample-photos">
+                <h3>Our Experiments & Activities</h3>
+                <div class="gallery" id="gallery-chemistry">
+                    <div class="photo-card">
+                        <img src="https://images.unsplash.com/photo-1532634922-8fe0b757fb13?w=400" alt="Chemical Reactions">
+                        <div class="photo-info">
+                            <div class="photo-title">Chemical Reactions</div>
+                            <div class="photo-description">Observing color changes and reactions in the chemistry lab.</div>
+                            <span class="badge">October 2024</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="code-note">
+            <h4>🚀 Ready to Add Your Own Photos?</h4>
+            <p><strong>Instructions for GitHub:</strong></p>
+            <ol style="margin: 10px 0 10px 20px;">
+                <li>Create folders: <code>images/grade6/</code>, <code>images/grade7/</code>, etc.</li>
+                <li>Upload your student photos to these folders</li>
+                <li>Edit the JavaScript section below to add your photo details</li>
+                <li>Save this file as <code>index.html</code></li>
+                <li>Commit and push to your GitHub repository</li>
+                <li>Enable GitHub Pages in your repository settings</li>
+            </ol>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Science Class Gallery | Made with ❤️ for Science Education</p>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        // CUSTOMIZE YOUR PHOTOS HERE
+        // Replace the sample photos with your own by editing this object
+        const photoData = {
+            grade6: [
+                {
+                    image: 'images/grade6/volcano.jpg',
+                    title: 'Volcano Experiment',
+                    description: 'Students created erupting volcanoes using baking soda and vinegar.',
+                    date: 'October 2024'
+                },
+                // Add more photos here
+            ],
+            grade7: [
+                {
+                    image: 'images/grade7/ecosystem.jpg',
+                    title: 'Ecosystem Project',
+                    description: 'Building terrarium ecosystems to study interactions.',
+                    date: 'October 2024'
+                },
+                // Add more photos here
+            ],
+            grade8: [
+                {
+                    image: 'images/grade8/physics.jpg',
+                    title: 'Newton\'s Laws',
+                    description: 'Demonstrating motion and force through activities.',
+                    date: 'November 2024'
+                },
+                // Add more photos here
+            ],
+            unified: [
+                {
+                    image: 'images/unified/sensory.jpg',
+                    title: 'Sensory Experiments',
+                    description: 'Exploring science through touch, sight, and sound.',
+                    date: 'October 2024'
+                },
+                // Add more photos here
+            ],
+            biology: [
+                {
+                    image: 'images/biology/dna.jpg',
+                    title: 'DNA Modeling',
+                    description: 'Building 3D models of DNA structure.',
+                    date: 'September 2024'
+                },
+                // Add more photos here
+            ],
+            chemistry: [
+                {
+                    image: 'images/chemistry/reactions.jpg',
+                    title: 'Chemical Reactions',
+                    description: 'Observing color changes and reactions in the lab.',
+                    date: 'October 2024'
+                },
+                // Add more photos here
+            ]
+        };
+
+        // Function to load custom photos (uncomment when you have your own photos)
+        /*
+        function loadPhotos() {
+            Object.keys(photoData).forEach(grade => {
+                const gallery = document.getElementById(`gallery-${grade}`);
+                if (photoData[grade].length > 0) {
+                    gallery.innerHTML = '';
+                    photoData[grade].forEach(photo => {
+                        const card = `
+                            <div class="photo-card">
+                                <img src="${photo.image}" alt="${photo.title}">
+                                <div class="photo-info">
+                                    <div class="photo-title">${photo.title}</div>
+                                    <div class="photo-description">${photo.description}</div>
+                                    <span class="badge">${photo.date}</span>
+                                </div>
+                            </div>
+                        `;
+                        gallery.innerHTML += card;
+                    });
+                }
+            });
+        }
+        // Uncomment the line below when you're ready to use your own photos
+        // loadPhotos();
+        */
+    </script>
+</body>
+</html>
