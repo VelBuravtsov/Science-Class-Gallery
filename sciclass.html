@@ -124,29 +124,81 @@
             font-size: 1.1em;
         }
 
-        .upload-section {
-            background: #f8f9fa;
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            border: 2px dashed #667eea;
-        }
-
-        .upload-section h3 {
-            color: #667eea;
-            margin-bottom: 15px;
-        }
-
-        .upload-instructions {
-            background: #e3f2fd;
-            padding: 15px;
-            border-radius: 8px;
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             margin-bottom: 20px;
-            border-left: 4px solid #2196f3;
+            font-size: 0.95em;
+            color: #666;
         }
 
-        .upload-instructions p {
-            margin: 5px 0;
+        .breadcrumb button {
+            background: none;
+            border: none;
+            color: #667eea;
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 0.95em;
+            padding: 0;
+        }
+
+        .breadcrumb button:hover {
+            color: #764ba2;
+        }
+
+        .units-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .unit-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .unit-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.2);
+        }
+
+        .unit-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .unit-content {
+            padding: 20px;
+        }
+
+        .unit-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .unit-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .unit-description {
+            color: #666;
             font-size: 0.95em;
         }
 
@@ -191,10 +243,6 @@
             color: #666;
         }
 
-        .sample-photos {
-            margin-top: 20px;
-        }
-
         .badge {
             display: inline-block;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -205,31 +253,48 @@
             margin-top: 10px;
         }
 
+        .upload-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 2px dashed #667eea;
+        }
+
+        .upload-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .upload-instructions {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .upload-instructions p {
+            margin: 5px 0;
+            font-size: 0.95em;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
         footer {
             text-align: center;
             padding: 30px;
             color: white;
             margin-top: 50px;
-        }
-
-        .code-note {
-            background: #fff3cd;
-            border: 1px solid #ffc107;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-
-        .code-note h4 {
-            color: #856404;
-            margin-bottom: 10px;
-        }
-
-        .code-note code {
-            background: #f8f9fa;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
         }
 
         @media (max-width: 768px) {
@@ -246,6 +311,10 @@
                 padding: 20px;
             }
 
+            .units-grid {
+                grid-template-columns: 1fr;
+            }
+
             .gallery {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
                 gap: 15px;
@@ -259,12 +328,12 @@
             <h1>🔬 Science Class Gallery</h1>
             <p class="subtitle">Exploring, Experimenting, and Learning Together</p>
             <nav>
-                <button class="nav-btn active" onclick="showPage('grade6')">6th Grade</button>
-                <button class="nav-btn" onclick="showPage('grade7')">7th Grade</button>
-                <button class="nav-btn" onclick="showPage('grade8')">8th Grade</button>
-                <button class="nav-btn" onclick="showPage('unified')">Unified Science</button>
-                <button class="nav-btn" onclick="showPage('biology')">Biology</button>
-                <button class="nav-btn" onclick="showPage('chemistry')">Chemistry</button>
+                <button class="nav-btn active" onclick="showClass('grade6')">6th Grade</button>
+                <button class="nav-btn" onclick="showClass('grade7')">7th Grade</button>
+                <button class="nav-btn" onclick="showClass('grade8')">8th Grade</button>
+                <button class="nav-btn" onclick="showClass('unified')">Unified Science</button>
+                <button class="nav-btn" onclick="showClass('biology')">Biology</button>
+                <button class="nav-btn" onclick="showClass('chemistry')">Chemistry</button>
             </nav>
         </div>
     </header>
@@ -272,198 +341,855 @@
     <div class="container">
         <!-- 6th Grade Page -->
         <div id="grade6" class="page active">
+            <div class="breadcrumb">
+                <span>🏠 Home</span>
+                <span>›</span>
+                <span>6th Grade Science</span>
+            </div>
             <h2>6th Grade Science</h2>
             <p class="page-description">Discovering the fundamentals of physical science, earth science, and life science.</p>
             
+            <div class="units-grid" id="units-grade6"></div>
+        </div>
+
+        <!-- 6th Grade Units -->
+        <div id="grade6-unit1" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('grade6')">6th Grade</button>
+                <span>›</span>
+                <span>Unit 1: Light and Matter</span>
+            </div>
+            <h2>Unit 1: Light and Matter</h2>
+            <p class="page-description">Exploring how light interacts with different materials and objects.</p>
+            
             <div class="upload-section">
-                <h3>📸 How to Add Photos</h3>
+                <h3>📸 Add Photos for This Unit</h3>
                 <div class="upload-instructions">
-                    <p><strong>Step 1:</strong> Place your photos in a folder named <code>images/grade6/</code></p>
-                    <p><strong>Step 2:</strong> Add the photo details in the JavaScript section below</p>
-                    <p><strong>Step 3:</strong> Commit and push to GitHub</p>
+                    <p><strong>Folder:</strong> <code>images/grade6/unit1/</code></p>
+                    <p>Upload photos of light experiments, reflection activities, and matter studies.</p>
                 </div>
             </div>
+            
+            <div class="gallery" id="gallery-grade6-unit1">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
 
-            <div class="sample-photos">
-                <h3>Our Experiments & Activities</h3>
-                <div class="gallery" id="gallery-grade6">
-                    <!-- Sample photos - replace with your own -->
-                    <div class="photo-card">
-                        <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=400" alt="Science Experiment">
-                        <div class="photo-info">
-                            <div class="photo-title">Volcano Experiment</div>
-                            <div class="photo-description">Students created erupting volcanoes using baking soda and vinegar.</div>
-                            <span class="badge">October 2024</span>
-                        </div>
-                    </div>
-                    <div class="photo-card">
-                        <img src="https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=400" alt="Lab Work">
-                        <div class="photo-info">
-                            <div class="photo-title">Microscope Lab</div>
-                            <div class="photo-description">Exploring cells and microorganisms under the microscope.</div>
-                            <span class="badge">September 2024</span>
-                        </div>
-                    </div>
+        <div id="grade6-unit2" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('grade6')">6th Grade</button>
+                <span>›</span>
+                <span>Unit 2: Thermal Energy</span>
+            </div>
+            <h2>Unit 2: Thermal Energy</h2>
+            <p class="page-description">Understanding heat transfer and thermal energy in everyday life.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/grade6/unit2/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-grade6-unit2">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="grade6-unit3" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('grade6')">6th Grade</button>
+                <span>›</span>
+                <span>Unit 3: Weather Climate and Water Cycling</span>
+            </div>
+            <h2>Unit 3: Weather Climate and Water Cycling</h2>
+            <p class="page-description">Studying weather patterns, climate, and the water cycle.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/grade6/unit3/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-grade6-unit3">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="grade6-unit4" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('grade6')">6th Grade</button>
+                <span>›</span>
+                <span>Unit 4: Plate Tectonics and Rock Cycling</span>
+            </div>
+            <h2>Unit 4: Plate Tectonics and Rock Cycling</h2>
+            <p class="page-description">Discovering Earth's moving plates and the rock cycle.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/grade6/unit4/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-grade6-unit4">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="grade6-unit5" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('grade6')">6th Grade</button>
+                <span>›</span>
+                <span>Unit 5: Natural Hazards</span>
+            </div>
+            <h2>Unit 5: Natural Hazards</h2>
+            <p class="page-description">Learning about earthquakes, volcanoes, and other natural phenomena.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/grade6/unit5/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-grade6-unit5">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="grade6-unit6" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('grade6')">6th Grade</button>
+                <span>›</span>
+                <span>Unit 6: Cells and Systems</span>
+            </div>
+            <h2>Unit 6: Cells and Systems</h2>
+            <p class="page-description">Exploring the building blocks of life and body systems.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/grade6/unit6/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-grade6-unit6">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
                 </div>
             </div>
         </div>
 
         <!-- 7th Grade Page -->
         <div id="grade7" class="page">
+            <div class="breadcrumb">
+                <span>🏠 Home</span>
+                <span>›</span>
+                <span>7th Grade Science</span>
+            </div>
             <h2>7th Grade Science</h2>
-            <p class="page-description">Diving deeper into life science, ecosystems, and the human body.</p>
+            <p class="page-description">Diving deeper into life science, ecosystems, and chemical reactions.</p>
+            
+            <div class="units-grid" id="units-grade7"></div>
+        </div>
+
+        <!-- 7th Grade Units -->
+        <div id="grade7-unit1" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('grade7')">7th Grade</button>
+                <span>›</span>
+                <span>Unit 1: Chemical Reactions and Matter</span>
+            </div>
+            <h2>Unit 1: Chemical Reactions and Matter</h2>
+            <p class="page-description">Understanding how matter changes through chemical reactions.</p>
             
             <div class="upload-section">
-                <h3>📸 How to Add Photos</h3>
+                <h3>📸 Add Photos for This Unit</h3>
                 <div class="upload-instructions">
-                    <p><strong>Step 1:</strong> Place your photos in a folder named <code>images/grade7/</code></p>
-                    <p><strong>Step 2:</strong> Add the photo details in the JavaScript section below</p>
-                    <p><strong>Step 3:</strong> Commit and push to GitHub</p>
+                    <p><strong>Folder:</strong> <code>images/grade7/unit1/</code></p>
                 </div>
             </div>
+            
+            <div class="gallery" id="gallery-grade7-unit1">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
 
-            <div class="sample-photos">
-                <h3>Our Experiments & Activities</h3>
-                <div class="gallery" id="gallery-grade7">
-                    <div class="photo-card">
-                        <img src="https://images.unsplash.com/photo-1530587191325-3db32d826c18?w=400" alt="Ecosystem Study">
-                        <div class="photo-info">
-                            <div class="photo-title">Ecosystem Project</div>
-                            <div class="photo-description">Building terrarium ecosystems to study plant and animal interactions.</div>
-                            <span class="badge">October 2024</span>
-                        </div>
-                    </div>
+        <div id="grade7-unit2" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('grade7')">7th Grade</button>
+                <span>›</span>
+                <span>Unit 2: Chemical Reactions and Energy</span>
+            </div>
+            <h2>Unit 2: Chemical Reactions and Energy</h2>
+            <p class="page-description">Exploring energy changes in chemical reactions.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/grade7/unit2/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-grade7-unit2">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="grade7-unit3" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('grade7')">7th Grade</button>
+                <span>›</span>
+                <span>Unit 3: Metabolic Reactions</span>
+            </div>
+            <h2>Unit 3: Metabolic Reactions</h2>
+            <p class="page-description">Understanding how organisms process energy and matter.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/grade7/unit3/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-grade7-unit3">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="grade7-unit4" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('grade7')">7th Grade</button>
+                <span>›</span>
+                <span>Unit 4: Matter Cycling and Photosynthesis</span>
+            </div>
+            <h2>Unit 4: Matter Cycling and Photosynthesis</h2>
+            <p class="page-description">Learning how plants produce energy and cycle matter.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/grade7/unit4/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-grade7-unit4">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="grade7-unit5" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('grade7')">7th Grade</button>
+                <span>›</span>
+                <span>Unit 5: Ecosystem Dynamics</span>
+            </div>
+            <h2>Unit 5: Ecosystem Dynamics</h2>
+            <p class="page-description">Studying relationships in ecosystems and food webs.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/grade7/unit5/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-grade7-unit5">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="grade7-unit6" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('grade7')">7th Grade</button>
+                <span>›</span>
+                <span>Unit 6: Earth Resources and Human Impact</span>
+            </div>
+            <h2>Unit 6: Earth Resources and Human Impact</h2>
+            <p class="page-description">Understanding our planet's resources and human effects.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/grade7/unit6/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-grade7-unit6">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
                 </div>
             </div>
         </div>
 
         <!-- 8th Grade Page -->
         <div id="grade8" class="page">
+            <div class="breadcrumb">
+                <span>🏠 Home</span>
+                <span>›</span>
+                <span>8th Grade Science</span>
+            </div>
             <h2>8th Grade Science</h2>
             <p class="page-description">Exploring chemistry, physics, and preparing for high school science.</p>
             
+            <div class="units-grid" id="units-grade8"></div>
+        </div>
+
+        <!-- 8th Grade Units (similar structure, abbreviated for space) -->
+        <div id="grade8-unit1" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('grade8')">8th Grade</button>
+                <span>›</span>
+                <span>Unit 1: Global Climates</span>
+            </div>
+            <h2>Unit 1: Global Climates</h2>
+            <p class="page-description">Understanding Earth's climate systems and patterns.</p>
+            
             <div class="upload-section">
-                <h3>📸 How to Add Photos</h3>
+                <h3>📸 Add Photos for This Unit</h3>
                 <div class="upload-instructions">
-                    <p><strong>Step 1:</strong> Place your photos in a folder named <code>images/grade8/</code></p>
-                    <p><strong>Step 2:</strong> Add the photo details in the JavaScript section below</p>
-                    <p><strong>Step 3:</strong> Commit and push to GitHub</p>
+                    <p><strong>Folder:</strong> <code>images/grade8/unit1/</code></p>
                 </div>
             </div>
+            
+            <div class="gallery" id="gallery-grade8-unit1">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
 
-            <div class="sample-photos">
-                <h3>Our Experiments & Activities</h3>
-                <div class="gallery" id="gallery-grade8">
-                    <div class="photo-card">
-                        <img src="https://images.unsplash.com/photo-1603126857599-f6e157fa2fe6?w=400" alt="Physics Lab">
-                        <div class="photo-info">
-                            <div class="photo-title">Newton's Laws</div>
-                            <div class="photo-description">Demonstrating motion and force through hands-on activities.</div>
-                            <span class="badge">November 2024</span>
-                        </div>
-                    </div>
+        <div id="grade8-unit2" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('grade8')">8th Grade</button>
+                <span>›</span>
+                <span>Unit 2: Earthquakes, Tsunamis, and Volcanoes</span>
+            </div>
+            <h2>Unit 2: Earthquakes, Tsunamis, and Volcanoes</h2>
+            <p class="page-description">Studying Earth's powerful geological forces.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/grade8/unit2/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-grade8-unit2">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="grade8-unit3" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('grade8')">8th Grade</button>
+                <span>›</span>
+                <span>Unit 3: Trees: An Intro to Chemistry</span>
+            </div>
+            <h2>Unit 3: Trees: An Intro to Chemistry</h2>
+            <p class="page-description">Exploring chemistry through nature and trees.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/grade8/unit3/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-grade8-unit3">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="grade8-unit4" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('grade8')">8th Grade</button>
+                <span>›</span>
+                <span>Unit 4: Cellular Life</span>
+            </div>
+            <h2>Unit 4: Cellular Life</h2>
+            <p class="page-description">Understanding the cell and its functions.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/grade8/unit4/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-grade8-unit4">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="grade8-unit5" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('grade8')">8th Grade</button>
+                <span>›</span>
+                <span>Unit 5: Big Life (if time allows)</span>
+            </div>
+            <h2>Unit 5: Big Life</h2>
+            <p class="page-description">Exploring life on a larger scale.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/grade8/unit5/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-grade8-unit5">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
                 </div>
             </div>
         </div>
 
         <!-- Unified Science Page -->
         <div id="unified" class="page">
+            <div class="breadcrumb">
+                <span>🏠 Home</span>
+                <span>›</span>
+                <span>Unified Science</span>
+            </div>
             <h2>Unified Science</h2>
             <p class="page-description">Inclusive science learning for all students with hands-on exploration.</p>
             
+            <div class="units-grid" id="units-unified"></div>
+        </div>
+
+        <!-- Unified Science Units (abbreviated) -->
+        <div id="unified-unit1" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('unified')">Unified Science</button>
+                <span>›</span>
+                <span>Unit 1: Patterns and Trends</span>
+            </div>
+            <h2>Unit 1: Patterns and Trends</h2>
+            <p class="page-description">Discovering patterns in nature and science.</p>
+            
             <div class="upload-section">
-                <h3>📸 How to Add Photos</h3>
+                <h3>📸 Add Photos for This Unit</h3>
                 <div class="upload-instructions">
-                    <p><strong>Step 1:</strong> Place your photos in a folder named <code>images/unified/</code></p>
-                    <p><strong>Step 2:</strong> Add the photo details in the JavaScript section below</p>
-                    <p><strong>Step 3:</strong> Commit and push to GitHub</p>
+                    <p><strong>Folder:</strong> <code>images/unified/unit1/</code></p>
                 </div>
             </div>
+            
+            <div class="gallery" id="gallery-unified-unit1">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
 
-            <div class="sample-photos">
-                <h3>Our Experiments & Activities</h3>
-                <div class="gallery" id="gallery-unified">
-                    <div class="photo-card">
-                        <img src="https://images.unsplash.com/photo-1581093458791-9d42e1bb2d40?w=400" alt="Sensory Science">
-                        <div class="photo-info">
-                            <div class="photo-title">Sensory Experiments</div>
-                            <div class="photo-description">Exploring science through touch, sight, and sound.</div>
-                            <span class="badge">October 2024</span>
-                        </div>
-                    </div>
+        <div id="unified-unit2" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('unified')">Unified Science</button>
+                <span>›</span>
+                <span>Unit 2: Dynamics</span>
+            </div>
+            <h2>Unit 2: Dynamics</h2>
+            <p class="page-description">Exploring motion and forces.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/unified/unit2/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-unified-unit2">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="unified-unit3" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('unified')">Unified Science</button>
+                <span>›</span>
+                <span>Unit 3: Embedded Systems</span>
+            </div>
+            <h2>Unit 3: Embedded Systems</h2>
+            <p class="page-description">Understanding interconnected systems in nature.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/unified/unit3/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-unified-unit3">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="unified-unit4" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('unified')">Unified Science</button>
+                <span>›</span>
+                <span>Unit 4: Genetics</span>
+            </div>
+            <h2>Unit 4: Genetics</h2>
+            <p class="page-description">Learning about heredity and traits.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/unified/unit4/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-unified-unit4">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="unified-unit5" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('unified')">Unified Science</button>
+                <span>›</span>
+                <span>Unit 5: Evolution and Natural Selection</span>
+            </div>
+            <h2>Unit 5: Evolution and Natural Selection</h2>
+            <p class="page-description">Understanding how species change over time.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/unified/unit5/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-unified-unit5">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
                 </div>
             </div>
         </div>
 
         <!-- Biology Page -->
         <div id="biology" class="page">
+            <div class="breadcrumb">
+                <span>🏠 Home</span>
+                <span>›</span>
+                <span>Biology</span>
+            </div>
             <h2>Biology</h2>
             <p class="page-description">Studying living organisms, cells, genetics, and evolution.</p>
             
+            <div class="units-grid" id="units-biology"></div>
+        </div>
+
+        <!-- Biology Units -->
+        <div id="biology-unit1" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('biology')">Biology</button>
+                <span>›</span>
+                <span>Unit 1: Ecosystem Interactions and Dynamics</span>
+            </div>
+            <h2>Unit 1: Ecosystem Interactions and Dynamics</h2>
+            <p class="page-description">Exploring relationships between organisms and their environment.</p>
+            
             <div class="upload-section">
-                <h3>📸 How to Add Photos</h3>
+                <h3>📸 Add Photos for This Unit</h3>
                 <div class="upload-instructions">
-                    <p><strong>Step 1:</strong> Place your photos in a folder named <code>images/biology/</code></p>
-                    <p><strong>Step 2:</strong> Add the photo details in the JavaScript section below</p>
-                    <p><strong>Step 3:</strong> Commit and push to GitHub</p>
+                    <p><strong>Folder:</strong> <code>images/biology/unit1/</code></p>
                 </div>
             </div>
+            
+            <div class="gallery" id="gallery-biology-unit1">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
 
-            <div class="sample-photos">
-                <h3>Our Experiments & Activities</h3>
-                <div class="gallery" id="gallery-biology">
-                    <div class="photo-card">
-                        <img src="https://images.unsplash.com/photo-1578496479914-7ef3b0193be3?w=400" alt="DNA Model">
-                        <div class="photo-info">
-                            <div class="photo-title">DNA Modeling</div>
-                            <div class="photo-description">Building 3D models of DNA structure and learning about genetics.</div>
-                            <span class="badge">September 2024</span>
-                        </div>
-                    </div>
+        <div id="biology-unit2" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('biology')">Biology</button>
+                <span>›</span>
+                <span>Unit 2: Ecosystems, Matter and Interactions</span>
+            </div>
+            <h2>Unit 2: Ecosystems, Matter and Interactions</h2>
+            <p class="page-description">Understanding matter flow through ecosystems.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/biology/unit2/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-biology-unit2">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="biology-unit3" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('biology')">Biology</button>
+                <span>›</span>
+                <span>Unit 3: Inheritance and Variations of Traits</span>
+            </div>
+            <h2>Unit 3: Inheritance and Variations of Traits</h2>
+            <p class="page-description">Learning how traits are passed from parents to offspring.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/biology/unit3/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-biology-unit3">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="biology-unit4" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('biology')">Biology</button>
+                <span>›</span>
+                <span>Unit 4: Natural Selection and Evolution of Populations</span>
+            </div>
+            <h2>Unit 4: Natural Selection and Evolution of Populations</h2>
+            <p class="page-description">Understanding how populations evolve over time.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/biology/unit4/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-biology-unit4">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="biology-unit5" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('biology')">Biology</button>
+                <span>›</span>
+                <span>Unit 5: Common Ancestry and Speciation</span>
+            </div>
+            <h2>Unit 5: Common Ancestry and Speciation</h2>
+            <p class="page-description">Exploring how new species form and common ancestors.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/biology/unit5/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-biology-unit5">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
                 </div>
             </div>
         </div>
 
         <!-- Chemistry Page -->
         <div id="chemistry" class="page">
+            <div class="breadcrumb">
+                <span>🏠 Home</span>
+                <span>›</span>
+                <span>Chemistry</span>
+            </div>
             <h2>Chemistry</h2>
             <p class="page-description">Exploring matter, reactions, and the periodic table.</p>
             
+            <div class="units-grid" id="units-chemistry"></div>
+        </div>
+
+        <!-- Chemistry Units -->
+        <div id="chemistry-unit1" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('chemistry')">Chemistry</button>
+                <span>›</span>
+                <span>Unit 1: Thermodynamics in Earth's System</span>
+            </div>
+            <h2>Unit 1: Thermodynamics in Earth's System</h2>
+            <p class="page-description">Understanding energy flow in Earth's systems.</p>
+            
             <div class="upload-section">
-                <h3>📸 How to Add Photos</h3>
+                <h3>📸 Add Photos for This Unit</h3>
                 <div class="upload-instructions">
-                    <p><strong>Step 1:</strong> Place your photos in a folder named <code>images/chemistry/</code></p>
-                    <p><strong>Step 2:</strong> Add the photo details in the JavaScript section below</p>
-                    <p><strong>Step 3:</strong> Commit and push to GitHub</p>
+                    <p><strong>Folder:</strong> <code>images/chemistry/unit1/</code></p>
                 </div>
             </div>
-
-            <div class="sample-photos">
-                <h3>Our Experiments & Activities</h3>
-                <div class="gallery" id="gallery-chemistry">
-                    <div class="photo-card">
-                        <img src="https://images.unsplash.com/photo-1532634922-8fe0b757fb13?w=400" alt="Chemical Reactions">
-                        <div class="photo-info">
-                            <div class="photo-title">Chemical Reactions</div>
-                            <div class="photo-description">Observing color changes and reactions in the chemistry lab.</div>
-                            <span class="badge">October 2024</span>
-                        </div>
-                    </div>
+            
+            <div class="gallery" id="gallery-chemistry-unit1">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
                 </div>
             </div>
         </div>
 
-        <div class="code-note">
-            <h4>🚀 Ready to Add Your Own Photos?</h4>
-            <p><strong>Instructions for GitHub:</strong></p>
-            <ol style="margin: 10px 0 10px 20px;">
-                <li>Create folders: <code>images/grade6/</code>, <code>images/grade7/</code>, etc.</li>
-                <li>Upload your student photos to these folders</li>
-                <li>Edit the JavaScript section below to add your photo details</li>
-                <li>Save this file as <code>index.html</code></li>
-                <li>Commit and push to your GitHub repository</li>
-                <li>Enable GitHub Pages in your repository settings</li>
-            </ol>
+        <div id="chemistry-unit2" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('chemistry')">Chemistry</button>
+                <span>›</span>
+                <span>Unit 2: Structure and Properties of Matter</span>
+            </div>
+            <h2>Unit 2: Structure and Properties of Matter</h2>
+            <p class="page-description">Learning about atoms, molecules, and material properties.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/chemistry/unit2/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-chemistry-unit2">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="chemistry-unit3" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('chemistry')">Chemistry</button>
+                <span>›</span>
+                <span>Unit 3: Molecular Processes in Earth's System</span>
+            </div>
+            <h2>Unit 3: Molecular Processes in Earth's System</h2>
+            <p class="page-description">Exploring chemical processes in nature.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/chemistry/unit3/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-chemistry-unit3">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="chemistry-unit4" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('chemistry')">Chemistry</button>
+                <span>›</span>
+                <span>Unit 4: Chemical Reactions</span>
+            </div>
+            <h2>Unit 4: Chemical Reactions</h2>
+            <p class="page-description">Understanding how substances interact and change.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/chemistry/unit4/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-chemistry-unit4">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="chemistry-unit5" class="page">
+            <div class="breadcrumb">
+                <button onclick="showClass('chemistry')">Chemistry</button>
+                <span>›</span>
+                <span>Unit 5: Energy from Chemical & Nuclear Reactions</span>
+            </div>
+            <h2>Unit 5: Energy from Chemical & Nuclear Reactions</h2>
+            <p class="page-description">Exploring energy production from reactions.</p>
+            
+            <div class="upload-section">
+                <h3>📸 Add Photos for This Unit</h3>
+                <div class="upload-instructions">
+                    <p><strong>Folder:</strong> <code>images/chemistry/unit5/</code></p>
+                </div>
+            </div>
+            
+            <div class="gallery" id="gallery-chemistry-unit5">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📷</div>
+                    <p>No photos yet. Add some amazing experiment photos!</p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -472,7 +1198,234 @@
     </footer>
 
     <script>
-        function showPage(pageId) {
+        // Unit data with theme images - You can replace these URLs with your own images
+        const unitsData = {
+            grade6: [
+                { 
+                    id: 1, 
+                    title: 'Light and Matter', 
+                    description: 'Exploring how light interacts with materials',
+                    image: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=400'
+                },
+                { 
+                    id: 2, 
+                    title: 'Thermal Energy', 
+                    description: 'Understanding heat transfer and energy',
+                    image: 'https://images.unsplash.com/photo-1473655587843-eda8944061e8?w=400'
+                },
+                { 
+                    id: 3, 
+                    title: 'Weather Climate and Water Cycling', 
+                    description: 'Studying weather patterns and water cycles',
+                    image: 'https://images.unsplash.com/photo-1534088568595-a066f410bcda?w=400'
+                },
+                { 
+                    id: 4, 
+                    title: 'Plate Tectonics and Rock Cycling', 
+                    description: 'Discovering Earth\'s moving plates',
+                    image: 'https://images.unsplash.com/photo-1564053489984-317bbd824340?w=400'
+                },
+                { 
+                    id: 5, 
+                    title: 'Natural Hazards', 
+                    description: 'Learning about earthquakes and volcanoes',
+                    image: 'https://images.unsplash.com/photo-1589802829985-817e51171b92?w=400'
+                },
+                { 
+                    id: 6, 
+                    title: 'Cells and Systems', 
+                    description: 'Exploring the building blocks of life',
+                    image: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?w=400'
+                }
+            ],
+            grade7: [
+                { 
+                    id: 1, 
+                    title: 'Chemical Reactions and Matter', 
+                    description: 'Understanding how matter changes',
+                    image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=400'
+                },
+                { 
+                    id: 2, 
+                    title: 'Chemical Reactions and Energy', 
+                    description: 'Exploring energy in reactions',
+                    image: 'https://images.unsplash.com/photo-1603126857599-f6e157fa2fe6?w=400'
+                },
+                { 
+                    id: 3, 
+                    title: 'Metabolic Reactions', 
+                    description: 'How organisms process energy',
+                    image: 'https://images.unsplash.com/photo-1628595351029-c2bf17511435?w=400'
+                },
+                { 
+                    id: 4, 
+                    title: 'Matter Cycling and Photosynthesis', 
+                    description: 'Learning about plant energy production',
+                    image: 'https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=400'
+                },
+                { 
+                    id: 5, 
+                    title: 'Ecosystem Dynamics', 
+                    description: 'Studying relationships in ecosystems',
+                    image: 'https://images.unsplash.com/photo-1530587191325-3db32d826c18?w=400'
+                },
+                { 
+                    id: 6, 
+                    title: 'Earth Resources and Human Impact', 
+                    description: 'Understanding our planet\'s resources',
+                    image: 'https://images.unsplash.com/photo-1569163139394-de4798aa62b0?w=400'
+                }
+            ],
+            grade8: [
+                { 
+                    id: 1, 
+                    title: 'Global Climates', 
+                    description: 'Understanding Earth\'s climate systems',
+                    image: 'https://images.unsplash.com/photo-1564053489984-317bbd824340?w=400'
+                },
+                { 
+                    id: 2, 
+                    title: 'Earthquakes, Tsunamis, and Volcanoes', 
+                    description: 'Studying Earth\'s powerful forces',
+                    image: 'https://images.unsplash.com/photo-1589802829985-817e51171b92?w=400'
+                },
+                { 
+                    id: 3, 
+                    title: 'Trees: An Intro to Chemistry', 
+                    description: 'Exploring chemistry through nature',
+                    image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400'
+                },
+                { 
+                    id: 4, 
+                    title: 'Cellular Life', 
+                    description: 'Understanding cells and their functions',
+                    image: 'https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=400'
+                },
+                { 
+                    id: 5, 
+                    title: 'Big Life (if time allows)', 
+                    description: 'Exploring life on a larger scale',
+                    image: 'https://images.unsplash.com/photo-1504173010664-32509aeebb62?w=400'
+                }
+            ],
+            unified: [
+                { 
+                    id: 1, 
+                    title: 'Patterns and Trends', 
+                    description: 'Discovering patterns in science',
+                    image: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400'
+                },
+                { 
+                    id: 2, 
+                    title: 'Dynamics', 
+                    description: 'Exploring motion and forces',
+                    image: 'https://images.unsplash.com/photo-1581093458791-9d42e1bb2d40?w=400'
+                },
+                { 
+                    id: 3, 
+                    title: 'Embedded Systems', 
+                    description: 'Understanding interconnected systems',
+                    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400'
+                },
+                { 
+                    id: 4, 
+                    title: 'Genetics', 
+                    description: 'Learning about heredity and traits',
+                    image: 'https://images.unsplash.com/photo-1578496479914-7ef3b0193be3?w=400'
+                },
+                { 
+                    id: 5, 
+                    title: 'Evolution and Natural Selection', 
+                    description: 'How species change over time',
+                    image: 'https://images.unsplash.com/photo-1535083783855-76ae62b2914e?w=400'
+                }
+            ],
+            biology: [
+                { 
+                    id: 1, 
+                    title: 'Ecosystem Interactions and Dynamics', 
+                    description: 'Relationships between organisms',
+                    image: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400'
+                },
+                { 
+                    id: 2, 
+                    title: 'Ecosystems, Matter and Interactions', 
+                    description: 'Matter flow through ecosystems',
+                    image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400'
+                },
+                { 
+                    id: 3, 
+                    title: 'Inheritance and Variations of Traits', 
+                    description: 'How traits are passed down',
+                    image: 'https://images.unsplash.com/photo-1578496479914-7ef3b0193be3?w=400'
+                },
+                { 
+                    id: 4, 
+                    title: 'Natural Selection and Evolution of Populations', 
+                    description: 'How populations evolve',
+                    image: 'https://images.unsplash.com/photo-1535083783855-76ae62b2914e?w=400'
+                },
+                { 
+                    id: 5, 
+                    title: 'Common Ancestry and Speciation', 
+                    description: 'How new species form',
+                    image: 'https://images.unsplash.com/photo-1504173010664-32509aeebb62?w=400'
+                }
+            ],
+            chemistry: [
+                { 
+                    id: 1, 
+                    title: 'Thermodynamics in Earth\'s System', 
+                    description: 'Energy flow in Earth\'s systems',
+                    image: 'https://images.unsplash.com/photo-1473655587843-eda8944061e8?w=400'
+                },
+                { 
+                    id: 2, 
+                    title: 'Structure and Properties of Matter', 
+                    description: 'Atoms, molecules, and properties',
+                    image: 'https://images.unsplash.com/photo-1532634922-8fe0b757fb13?w=400'
+                },
+                { 
+                    id: 3, 
+                    title: 'Molecular Processes in Earth\'s System', 
+                    description: 'Chemical processes in nature',
+                    image: 'https://images.unsplash.com/photo-1603126857599-f6e157fa2fe6?w=400'
+                },
+                { 
+                    id: 4, 
+                    title: 'Chemical Reactions', 
+                    description: 'How substances interact and change',
+                    image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=400'
+                },
+                { 
+                    id: 5, 
+                    title: 'Energy from Chemical & Nuclear Reactions', 
+                    description: 'Energy production from reactions',
+                    image: 'https://images.unsplash.com/photo-1603126857599-f6e157fa2fe6?w=400'
+                }
+            ]
+        };
+
+        // Initialize units on page load
+        function initializeUnits() {
+            Object.keys(unitsData).forEach(className => {
+                const container = document.getElementById(`units-${className}`);
+                if (container) {
+                    container.innerHTML = unitsData[className].map(unit => `
+                        <div class="unit-card" onclick="showUnit('${className}', ${unit.id})">
+                            <img src="${unit.image}" alt="${unit.title}" class="unit-image" onerror="this.src='https://via.placeholder.com/400x180/667eea/ffffff?text=Unit+${unit.id}'">
+                            <div class="unit-content">
+                                <span class="unit-number">Unit ${unit.id}</span>
+                                <div class="unit-title">${unit.title}</div>
+                                <div class="unit-description">${unit.description}</div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            });
+        }
+
+        function showClass(className) {
             // Hide all pages
             const pages = document.querySelectorAll('.page');
             pages.forEach(page => page.classList.remove('active'));
@@ -481,98 +1434,65 @@
             const buttons = document.querySelectorAll('.nav-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
             
-            // Show selected page
-            document.getElementById(pageId).classList.add('active');
+            // Show selected class page
+            document.getElementById(className).classList.add('active');
             
             // Add active class to clicked button
             event.target.classList.add('active');
         }
 
+        function showUnit(className, unitNumber) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show selected unit page
+            const unitPage = document.getElementById(`${className}-unit${unitNumber}`);
+            if (unitPage) {
+                unitPage.classList.add('active');
+            }
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', initializeUnits);
+
         // CUSTOMIZE YOUR PHOTOS HERE
-        // Replace the sample photos with your own by editing this object
+        // Add your student photos to this object
         const photoData = {
-            grade6: [
-                {
-                    image: 'images/grade6/volcano.jpg',
-                    title: 'Volcano Experiment',
-                    description: 'Students created erupting volcanoes using baking soda and vinegar.',
-                    date: 'October 2024'
-                },
-                // Add more photos here
+            'grade6-unit1': [
+                // Add photos like this:
+                // {
+                //     image: 'images/grade6/unit1/photo1.jpg',
+                //     title: 'Light Reflection Experiment',
+                //     description: 'Students exploring reflection with mirrors',
+                //     date: 'November 2024'
+                // }
             ],
-            grade7: [
-                {
-                    image: 'images/grade7/ecosystem.jpg',
-                    title: 'Ecosystem Project',
-                    description: 'Building terrarium ecosystems to study interactions.',
-                    date: 'October 2024'
-                },
-                // Add more photos here
-            ],
-            grade8: [
-                {
-                    image: 'images/grade8/physics.jpg',
-                    title: 'Newton\'s Laws',
-                    description: 'Demonstrating motion and force through activities.',
-                    date: 'November 2024'
-                },
-                // Add more photos here
-            ],
-            unified: [
-                {
-                    image: 'images/unified/sensory.jpg',
-                    title: 'Sensory Experiments',
-                    description: 'Exploring science through touch, sight, and sound.',
-                    date: 'October 2024'
-                },
-                // Add more photos here
-            ],
-            biology: [
-                {
-                    image: 'images/biology/dna.jpg',
-                    title: 'DNA Modeling',
-                    description: 'Building 3D models of DNA structure.',
-                    date: 'September 2024'
-                },
-                // Add more photos here
-            ],
-            chemistry: [
-                {
-                    image: 'images/chemistry/reactions.jpg',
-                    title: 'Chemical Reactions',
-                    description: 'Observing color changes and reactions in the lab.',
-                    date: 'October 2024'
-                },
-                // Add more photos here
-            ]
+            'grade6-unit2': [],
+            // Add more units as needed...
         };
 
-        // Function to load custom photos (uncomment when you have your own photos)
-        /*
+        // Function to load custom photos
         function loadPhotos() {
-            Object.keys(photoData).forEach(grade => {
-                const gallery = document.getElementById(`gallery-${grade}`);
-                if (photoData[grade].length > 0) {
-                    gallery.innerHTML = '';
-                    photoData[grade].forEach(photo => {
-                        const card = `
-                            <div class="photo-card">
-                                <img src="${photo.image}" alt="${photo.title}">
-                                <div class="photo-info">
-                                    <div class="photo-title">${photo.title}</div>
-                                    <div class="photo-description">${photo.description}</div>
-                                    <span class="badge">${photo.date}</span>
-                                </div>
+            Object.keys(photoData).forEach(unitId => {
+                const gallery = document.getElementById(`gallery-${unitId}`);
+                if (gallery && photoData[unitId].length > 0) {
+                    gallery.innerHTML = photoData[unitId].map(photo => `
+                        <div class="photo-card">
+                            <img src="${photo.image}" alt="${photo.title}">
+                            <div class="photo-info">
+                                <div class="photo-title">${photo.title}</div>
+                                <div class="photo-description">${photo.description}</div>
+                                <span class="badge">${photo.date}</span>
                             </div>
-                        `;
-                        gallery.innerHTML += card;
-                    });
+                        </div>
+                    `).join('');
                 }
             });
         }
-        // Uncomment the line below when you're ready to use your own photos
+
+        // Uncomment when you have photos to load
         // loadPhotos();
-        */
     </script>
 </body>
 </html>
